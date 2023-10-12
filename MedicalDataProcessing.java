@@ -1,6 +1,5 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import Users.User;
 
 import java.io.Console;
@@ -24,11 +23,6 @@ public class MedicalDataProcessing {
     private AccessController accessController = null;
 
     private User currentUser = null;
-
-    // Get a user by username
-    private User getUser(String username) {
-        return accessController.getUser(username);
-    }
 
     // Hash a password using MD5 (insecure, for demonstration purposes)
     private String hashPassword(String password) {

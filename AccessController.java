@@ -1,5 +1,3 @@
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import Users.UserFactory;
@@ -53,26 +51,20 @@ public class AccessController {
     }
 
     public void loadData(){
-        /* DataRecord dataRecord1 = new DataRecord(
-            1, 
-            MEDIUM_PRIVILEGE,
-            "Name: John Doe, Age: 30, Gender: Male",
-            "Diagnosis: Flu, Treatment: Rest and hydration",
-            "Medication: Paracetamol, Dosage: 500mg",
-            "Lab Tests: Blood Test, Urine Test"
-        );
-        dataRecords.put(dataRecord1.getId(), dataRecord1);
 
-        DataRecord dataRecord2 = new DataRecord(
-            2, 
-            HIGH_PRIVILEGE, 
-            "Name: Jane Smith, Age: 45, Gender: Female",
-            "Diagnosis: COVID-19, Treatment: Isolation and monitoring",
-            "Medication: Antiviral drugs, Lab Tests: COVID-19 test",
-            "Lab Tests: Blood Test"
-        );
-        dataRecords.put(dataRecord2.getId(), dataRecord1);
-      */   
+        String[] Data = this.fileController.readUserConfig(DATAPATH);
+
+        for (String record : Data){
+            String[] temp = record.split("--");
+            DataRecord dataRecord = new DataRecord(
+                Integer.parseInt(temp[0].strip()), 
+                Integer.parseInt(temp[1].strip()),
+                temp[2].strip(),
+                temp[3].strip(),
+                temp[4].strip(),
+                temp[5].strip());
+            dataRecords.put(dataRecord.getId(),dataRecord);
+        }
     }
 
     public DataRecord getDataRecord(int id) {
@@ -82,26 +74,4 @@ public class AccessController {
     public User getUser(String username) {
         return users.get(username);
     }
-
-    private String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hash = md.digest(password.getBytes());
-            StringBuilder hexString = new StringBuilder();
-
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xFF & b);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 }
