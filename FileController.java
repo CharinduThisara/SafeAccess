@@ -7,13 +7,9 @@ import java.io.IOException;
 
 public class FileController {
 
-    public static void writeToFile(String[] userData, String fileName) {
+    public static void writeuserConf(String[] userData, String fileName) {
         try (FileWriter fileWriter = new FileWriter(new File(fileName)); //try with resources to auto close without suppressing exceptions
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-
-            // Write the header
-            bufferedWriter.write("Username,PasswordHash,UserType,PrivilegeLevel");
-            bufferedWriter.newLine();
 
             // Write user data
             for (String user : userData) {
@@ -48,25 +44,3 @@ public class FileController {
         }
     }
 }
-
-
-
-/*     public static void main(String[] args) {
-        // Sample user data
-        String[] userData = {
-            "user1,md5_hash1,patient,1",
-            "user2,md5_hash2,staff,2",
-            "user3,md5_hash3,staff,3"
-        };
-
-        // Write user data to the configuration file
-        writeUserConfig(userData, "user_config.csv");
-
-        // Read user data from the configuration file
-        String[] readUserData = readUserConfig("user_config.csv");
-
-        // Example: Print all user data
-        for (String user : readUserData) {
-            System.out.println(user);
-        }
-    } */

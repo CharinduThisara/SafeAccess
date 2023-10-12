@@ -74,4 +74,20 @@ public class AccessController {
     public User getUser(String username) {
         return users.get(username);
     }
+
+    private String formatData(String username, String password, int userType, int privLvlIntegrity,int privLvlConfidentiality){
+        return new String(null, privLvlIntegrity, privLvlConfidentiality, null)
+    }
+
+    
+
+    public void addUser(String username, String password, int userType, int privLvlIntegrity,int privLvlConfidentiality){
+
+
+
+        User user = UserFactory.getUser(username,password,userType,privLvlIntegrity,privLvlConfidentiality);
+        users.put(user.getUsername(), user);
+    }
+
+
 }
