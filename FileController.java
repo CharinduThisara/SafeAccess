@@ -27,8 +27,8 @@ public class FileController {
         }
     }
 
-    public static String[] readUserConfig(String fileName) {
-        try(FileReader fileReader = new FileReader(new File(fileName));
+    public String[] readUserConfig(String filePath) {
+        try(FileReader fileReader = new FileReader(new File(filePath));
             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             // Read user data into a StringBuilder
@@ -41,11 +41,7 @@ public class FileController {
             // Split the data into an array of user records
             String[] userRecords = userData.toString().split("\n");
 
-            // Skip the header (first record)
-            String[] readUserData = new String[userRecords.length - 1];
-            System.arraycopy(userRecords, 1, readUserData, 0, userRecords.length - 1);
-
-            return readUserData;
+            return userRecords;
         } catch (IOException e) {
             e.printStackTrace();
             return new String[0];

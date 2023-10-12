@@ -1,10 +1,7 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.Scanner;
-
 import Users.User;
-import Users.UserFactory;
 
 import java.io.Console;
 
@@ -24,25 +21,14 @@ public class MedicalDataProcessing {
     public static final int CONFIDENTIAL = 1;
     public static final int SECRET = 2;
 
-    // Sample user data stored in a HashMap
-    private static HashMap<String, User> users = new HashMap<>();
-    
-    // Sample data records stored in a data structure
-    private static HashMap<Integer, DataRecord> dataRecords = new HashMap<>();
+    private AccessController accessController = null;
 
     private User currentUser = null;
 
-    
-
-   
-
     // Get a user by username
-    private static User getUser(String username) {
-        return users.get(username);
+    private User getUser(String username) {
+        return accessController.getUser(username);
     }
-
-
-    
 
     // Hash a password using MD5 (insecure, for demonstration purposes)
     private String hashPassword(String password) {
@@ -64,6 +50,10 @@ public class MedicalDataProcessing {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void init(){
+        this.accessController = new AccessController();
     }
 
     public boolean login(){
@@ -94,11 +84,11 @@ public class MedicalDataProcessing {
         String password = new String(console.readPassword("      > Password : "));
         System.out.print("");
 
-        User curUser = users.get(username);
+        User curUser = accessController.getUser(username);
+
         if (curUser == null){
             return false;
         }
-        
         
         if (curUser.getPassword().equals(hashPassword(password))){
             currentUser = curUser;
@@ -111,7 +101,7 @@ public class MedicalDataProcessing {
         
         MedicalDataProcessing program = new MedicalDataProcessing();
 
-        AccessController accessController = new AccessController();
+        program.init();
 
         if(program.login()==false){
             System.out.println("Login Fail");
@@ -122,7 +112,7 @@ public class MedicalDataProcessing {
 
         // Simulate access to data based on user privilege and data sensitivity
         User currentUser = program.currentUser;
-        DataRecord dataRecord = accessController.getDataRecord(1);
+        DataRecord dataRecord = program.accessController.getDataRecord(1);
 
         if (currentUser != null && dataRecord != null) {
             if (currentUser.getUserType() == PATIENT) {

@@ -1,17 +1,20 @@
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-import Users.User;
 import Users.UserFactory;
+import Users.User;
 
 public class AccessController {
-    private static final String USRCONFPATH = "Files/useConf.csv";
+    private static final String USRCONFPATH = "Files/userConf.csv";
     private static final String DATAPATH = "Files/data.csv";
 
     //user data stored in a HashMap
-    private HashMap<String, User> users = new HashMap<>();
-    
+    private final HashMap<String, User> users;
     //data records stored in a HashMap
-    private HashMap<Integer, DataRecord> dataRecords = new HashMap<>();
+    private final HashMap<Integer, DataRecord> dataRecords;
+
+    private final FileController fileController;
 
     // Constants for user types
     public static final int PATIENT = 0;
@@ -28,18 +31,29 @@ public class AccessController {
     public static final int SECRET = 2;
 
     public AccessController(){
+        this.users = new HashMap<>();
+        this.dataRecords = new HashMap<>();
+        this.fileController = new FileController();
         loadUsers();
         loadData();
     }
     public void loadUsers(){
-        User user1 = UserFactory.getUser("user1", "password1", PATIENT, LOW_PRIVILEGE,SECRET);
-        users.put(user1.getUsername(), user1);
-        User user2 = UserFactory.getUser("user2", "password2", HOSPITAL_STAFF, HIGH_PRIVILEGE,PUBLIC);
-        users.put(user2.getUsername(), user2);
+
+        String[] userData = this.fileController.readUserConfig(USRCONFPATH);
+
+        for (String data : userData){
+            User user = UserFactory.getUser(
+                data.split(",")[0].strip(), 
+                data.split(",")[1].strip(),
+                Integer.parseInt(data.split(",")[2].strip()),
+                Integer.parseInt(data.split(",")[3].strip()),
+                Integer.parseInt(data.split(",")[4].strip()));
+            users.put(user.getUsername(), user);
+        }
     }
 
     public void loadData(){
-        DataRecord dataRecord1 = new DataRecord(
+        /* DataRecord dataRecord1 = new DataRecord(
             1, 
             MEDIUM_PRIVILEGE,
             "Name: John Doe, Age: 30, Gender: Male",
@@ -58,11 +72,36 @@ public class AccessController {
             "Lab Tests: Blood Test"
         );
         dataRecords.put(dataRecord2.getId(), dataRecord1);
-        
+      */   
     }
 
     public DataRecord getDataRecord(int id) {
         return dataRecords.get(id);
+    }
+
+    public User getUser(String username) {
+        return users.get(username);
+    }
+
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xFF & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
