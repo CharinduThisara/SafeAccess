@@ -1,3 +1,3 @@
 # SafeAccess
 
-Simple Application to demonstrate RBAC, Bell-LaPadula model and Biba model
+Simple Application to demonstrate RBAC and Bell-LaPadula model.

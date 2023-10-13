@@ -4,15 +4,13 @@ public abstract class User {
     private String username;
     private String password;
     private int userType;
-    private int privLvlIntegrity;
-    private int privLvlConfidentiality;
+    private int privLvl;
 
-    public User(String username, String password, int userType, int privLvlIntegrity,int privLvlConfidentiality) {
+    public User(String username, String password, int userType, int privLvl) {
         this.username = username;
         this.password = password;
         this.userType = userType;
-        this.privLvlIntegrity = privLvlIntegrity;
-        this.privLvlConfidentiality = privLvlConfidentiality;
+        this.privLvl  = privLvl;
     }
 
     public String getUsername() {
@@ -27,11 +25,8 @@ public abstract class User {
         return userType;
     }
 
-    public int getPrivLvlIntegrity() {
-        return privLvlIntegrity;
-    }
-
-    public int getPrivLvlConfidentiality() {
-        return privLvlConfidentiality;
+    public int getPrivLvl() {
+        return privLvl;
     }
 }
+

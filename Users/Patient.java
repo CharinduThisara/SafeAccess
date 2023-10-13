@@ -1,11 +1,11 @@
 package Users;
 public class Patient extends User {
 
-    public Patient(String username, String password, int userType, int privLvlIntegrity, int privLvlConfidentiality) {
+    private static final int MAX_PRIV = 1;
 
-        
-        super(username, password, userType, privLvlIntegrity, privLvlConfidentiality);
+    public Patient(String username, String password, int userType, int privLvl) {
+
+        super(username, password, userType, Math.min(privLvl,MAX_PRIV));
 
     }
-    
 }

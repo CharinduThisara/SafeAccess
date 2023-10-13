@@ -2,10 +2,11 @@ package Users;
 
 public class Staff extends User {
 
-    public Staff(String username, String password, int userType, int privLvlIntegrity, int privLvlConfidentiality) {
+    private static final int MAX_PRIV = 2;
 
+    public Staff(String username, String password, int userType, int privLvl) {
 
-        super(username, password, userType, privLvlIntegrity, privLvlConfidentiality);
+        super(username, password, userType, Math.min(privLvl,MAX_PRIV));
+
     }
-    
 }

@@ -1,5 +1,7 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
+
 import Users.User;
 
 import java.io.Console;
@@ -48,6 +50,24 @@ public class MedicalDataProcessing {
 
     public void viewData(User user){
         this.accessController.getAllData(user);
+    }
+
+    public void writeData(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Data....\n");
+        System.out.println(
+            "Personal Details:..\n"+//
+            "Name:"
+        );
+
+        System.out.println(
+            "Age:"
+        );
+
+        System.out.println(
+            "Gender:"
+        );
     }
 
     public void init(){
@@ -106,14 +126,44 @@ public class MedicalDataProcessing {
             return;
         }
 
-
+        System.out.format("\nLogin Successfull\n\nWELCOME %s...!!\n\n",program.currentUser.getUsername());
 
         // Simulate access to data based on user privilege and data sensitivity
         User currentUser = program.currentUser;
 
-        program.viewData(currentUser);
-        
-        
-    }
+        try (Scanner scanner = new Scanner(System.in)) {
+            while(true){
+                System.out.println(
+                    "Select a Choice....\n"+//
+                    "Write         (1)\n"+//
+                    "Read All Data (2)\n"+//
+                    "Read My Data  (3)\n"+//
+                    "Exit          (99)"
+                );
 
+                System.out.print("Choice: ");
+                String choice = scanner.nextLine();
+                System.out.println("You entered: " + choice);
+
+                switch (Integer.parseInt(choice)) {
+                    case 1:
+                        program.writeData();
+                        break;
+                    case 2:
+                        program.viewData(currentUser);
+                        break;
+                    case 3:
+                        System.out.println("your data");
+                        break;
+                    case 99:
+                        System.out.println("\nExiting..........");
+                        return;
+                    default:
+                        continue;
+                }
+            }      
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }  
+    }
 }

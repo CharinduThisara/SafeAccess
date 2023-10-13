@@ -45,8 +45,7 @@ public class AccessController {
                 data.split(",")[0].strip(), 
                 data.split(",")[1].strip(),
                 Integer.parseInt(data.split(",")[2].strip()),
-                Integer.parseInt(data.split(",")[3].strip()),
-                Integer.parseInt(data.split(",")[4].strip()));
+                Integer.parseInt(data.split(",")[3].strip()));
             users.put(user.getUsername(), user);
         }
     }
@@ -78,9 +77,9 @@ public class AccessController {
         return users.get(username);
     }
   
-    public void addUser(String username, String password, int userType, int privLvlIntegrity,int privLvlConfidentiality){
+    public void addUser(String username, String password, int userType, int privLvl){
 
-        User user = UserFactory.getUser(username,password,userType,privLvlIntegrity,privLvlConfidentiality);
+        User user = UserFactory.getUser(username,password,userType,privLvl);
         users.put(user.getUsername(), user);
     }
 
@@ -135,7 +134,7 @@ public class AccessController {
                     array[k++] = dataRecord.getDrugPrescriptions();
                     array[k++] = dataRecord.getLabTestPrescriptions();
                     for (int i=1; i<5 ; i++ ){
-                        if (user.getPrivLvlConfidentiality() < dataRecord.getSensitivityLevels()[i-1]) {
+                        if (user.getPrivLvl() < dataRecord.getSensitivityLevels()[i-1]) {
                             array[i]= "Access Denied";
                         }
                     }
