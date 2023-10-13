@@ -1,15 +1,15 @@
 // DataRecord class to store data records
 public class DataRecord {
     private int id;
-    private int sensitivityLevel;
+    private int[] sensitivityLevels;
     private String personalDetails;
     private String sicknessDetails;
     private String drugPrescriptions;
     private String labTestPrescriptions;
 
-    public DataRecord(int id, int sensitivityLevel, String personalDetails,String sicknessDetails, String drugPrescriptions, String labTestPrescriptions) {
+    public DataRecord(int id, int[] sensitivityLevels, String personalDetails,String sicknessDetails, String drugPrescriptions, String labTestPrescriptions) {
         this.id = id;
-        this.sensitivityLevel = sensitivityLevel;
+        this.sensitivityLevels = sensitivityLevels;
         this.personalDetails = personalDetails;
         this.sicknessDetails = sicknessDetails;
         this.drugPrescriptions = drugPrescriptions;
@@ -20,8 +20,8 @@ public class DataRecord {
         return id;
     }
 
-    public int getSensitivityLevel() {
-        return sensitivityLevel;
+    public int[] getSensitivityLevels() {
+        return sensitivityLevels;
     }
 
     public String getPersonalDetails() {
@@ -43,7 +43,7 @@ public class DataRecord {
     // Print the data record
     public void printData() {
         System.out.println("Data Record #" + id);
-        System.out.println("Sensitivity Level: " + sensitivityLevel);
+        System.out.println("Sensitivity Levels: " + sensitivityLevels[0]+","+sensitivityLevels[1]+","+sensitivityLevels[2]+","+sensitivityLevels[3]);
         System.out.println("Personal Details: " + personalDetails);
         System.out.println("Sickness Details: " + sicknessDetails);
         System.out.println("Drug Prescriptions: " + drugPrescriptions);

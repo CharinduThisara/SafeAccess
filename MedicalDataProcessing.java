@@ -46,6 +46,10 @@ public class MedicalDataProcessing {
         }
     }
 
+    public String viewData(User user){
+        return this.accessController.getAllData(user);
+    }
+
     public void init(){
         this.accessController = new AccessController();
     }
@@ -106,27 +110,10 @@ public class MedicalDataProcessing {
 
         // Simulate access to data based on user privilege and data sensitivity
         User currentUser = program.currentUser;
-        DataRecord dataRecord = program.accessController.getDataRecord(1);
 
-        if (currentUser != null && dataRecord != null) {
-            if (currentUser.getUserType() == PATIENT) {
-                // Patients can read their own data records (if sensitivity allows)
-                if (dataRecord.getSensitivityLevel() <= MEDIUM_PRIVILEGE) {
-                    System.out.println("Accessing patient data:");
-                    dataRecord.printData();
-                } else {
-                    System.out.println("Access denied due to sensitivity level.");
-                }
-            } else if (currentUser.getUserType() == HOSPITAL_STAFF) {
-                // Hospital staff can access data based on their privilege level
-                if (currentUser.getPrivLvlIntegrity() >= dataRecord.getSensitivityLevel()) {
-                    System.out.println("Accessing hospital staff data:");
-                    dataRecord.printData();
-                } else {
-                    System.out.println("Access denied due to privilege level.");
-                }
-            }
-        }
+        program.viewData(currentUser);
+        
+        
     }
 
 }
