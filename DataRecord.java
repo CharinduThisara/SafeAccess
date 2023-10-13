@@ -49,4 +49,20 @@ public class DataRecord {
         System.out.println("Drug Prescriptions: " + drugPrescriptions);
         System.out.println("Lab Test Prescriptions: " + labTestPrescriptions);
     }
+
+    public void setPersonalDetails(String personalDetails) {
+        this.personalDetails = personalDetails;
+    }
+
+    public void setSicknessDetails(String sicknessDetails) {
+        this.sicknessDetails = sicknessDetails;
+    }
+
+    public void setDrugPrescriptions(String drugPrescriptions) {
+        this.drugPrescriptions = drugPrescriptions;
+    }
+
+    public void setLabTestPrescriptions(String labTestPrescriptions) {
+        this.labTestPrescriptions = labTestPrescriptions;
+    }
 }

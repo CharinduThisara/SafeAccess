@@ -1,20 +1,20 @@
-1--0,1,2,0--"Name: Sarah Adams, Age: 35, Gender: Female"--"Diagnosis: Migraine, Treatment: Rest and pain relief"--"Medication: Ibuprofen, Dosage: 400mg"--"Lab Tests: None"
-2--1,0,2,0--"Name: Michael Brown, Age: 42, Gender: Male"--"Diagnosis: Allergic Reaction, Treatment: Antihistamines and observation"--"Medication: Loratadine, Dosage: 10mg"--"Lab Tests: None"
-3--0,1,2,0--"Name: Olivia Martinez, Age: 28, Gender: Female"--"Diagnosis: Common Cold, Treatment: Plenty of fluids and rest"--"Medication: None"--"Lab Tests: None"
-4--2,1,2,2--"Name: William Wilson, Age: 60, Gender: Male"--"Diagnosis: Coronary Artery Disease, Treatment: Angioplasty and statins"--"Medication: Atorvastatin, Dosage: 40mg"--"Lab Tests: ECG, Cholesterol Level"
-5--1,2,2,0--"Name: Sophia Lee, Age: 25, Gender: Female"--"Diagnosis: Food Poisoning, Treatment: Hydration and anti-nausea medication"--"Medication: Ondansetron, Dosage: 4mg"--"Lab Tests: Stool Sample"
-6--0,0,0,1--"Name: Ethan Turner, Age: 31, Gender: Male"--"Diagnosis: Sprained Ankle, Treatment: RICE (Rest, Ice, Compression, Elevation)"--"Medication: None"--"Lab Tests: X-ray"
-7--1,1,1,0--"Name: Ava Clark, Age: 48, Gender: Female"--"Diagnosis: Bronchitis, Treatment: Antibiotics and cough syrup"--"Medication: Amoxicillin, Dosage: 500mg"--"Lab Tests: Sputum Culture"
-8--2,1,2,1--"Name: James Miller, Age: 55, Gender: Male"--"Diagnosis: Diabetes, Treatment: Insulin therapy and dietary changes"--"Medication: Insulin, Dosage: As per sliding scale"--"Lab Tests: Hemoglobin A1c, Fasting Blood Sugar"
-9--0,0,1,1--"Name: Mia Hall, Age: 22, Gender: Female"--"Diagnosis: Insect Bite, Treatment: Topical antihistamine cream"--"Medication: Hydrocortisone Cream"--"Lab Tests: None"
-10--1,2,1,2--"Name: Benjamin White, Age: 40, Gender: Male"--"Diagnosis: Pneumonia, Treatment: Antibiotics and chest physiotherapy"--"Medication: Azithromycin, Dosage: 500mg"--"Lab Tests: Chest X-ray, Sputum Culture"
-11--0,1,1,2--"Name: Lily Baker, Age: 19, Gender: Female"--"Diagnosis: Sunburn, Treatment: Aloe vera gel and pain relief"--"Medication: Ibuprofen, Dosage: 200mg"--"Lab Tests: None"
-12--2,0,0,0--"Name: Daniel Scott, Age: 62, Gender: Male"--"Diagnosis: Hypothyroidism, Treatment: Thyroid hormone replacement therapy"--"Medication: Levothyroxine, Dosage: As per prescription"--"Lab Tests: Thyroid Function Test"
-13--1,2,1,0--"Name: Chloe Young, Age: 38, Gender: Female"--"Diagnosis: Gastroenteritis, Treatment: Oral rehydration solution and dietary changes"--"Medication: None"--"Lab Tests: Stool Sample"
-14--0,0,2,2--"Name: Noah Green, Age: 27, Gender: Male"--"Diagnosis: Minor Cuts and Bruises, Treatment: Cleaning and bandaging"--"Medication: None"--"Lab Tests: None"
-15--1,1,1,1--"Name: Grace Harris, Age: 55, Gender: Female"--"Diagnosis: Otitis Media, Treatment: Antibiotic ear drops and pain relief"--"Medication: Ciprofloxacin Ear Drops"--"Lab Tests: Ear Examination"
-16--2,2,2,1--"Name: Samuel Turner, Age: 68, Gender: Male"--"Diagnosis: Hypertension, Treatment: ACE inhibitors and lifestyle modifications"--"Medication: Enalapril, Dosage: 10mg"--"Lab Tests: Blood Pressure Monitoring"
-17--0,2,1,2--"Name: Emily Collins, Age: 23, Gender: Female"--"Diagnosis: Seasonal Allergies, Treatment: Antihistamines and avoidance of allergens"--"Medication: Loratadine, Dosage: 10mg"--"Lab Tests: None"
-18--1,2,0,0--"Name: Andrew Bennett, Age: 45, Gender: Male"--"Diagnosis: Sinus Infection, Treatment: Antibiotics and nasal decongestants"--"Medication: Amoxicillin, Dosage: 500mg"--"Lab Tests: None"
-19--0,1,2,2--"Name: Harper Lewis, Age: 30, Gender: Female"--"Diagnosis: Stress-Related Headache, Treatment: Stress management and pain relief"--"Medication: Acetaminophen, Dosage: 500mg"--"Lab Tests: None"
-20--2,2,1,1--"Name: Benjamin Parker, Age: 58, Gender: Male"--"Diagnosis: Osteoarthritis, Treatment: Physical therapy and pain management"--"Medication: Celecoxib, Dosage: 200mg"--"Lab Tests: Joint X-ray, ESR"
+1--0,1,2,0--Name: Sarah Adams, Age: 35, Gender: Female--Migraine--Ibuprofen 400mg--None
+2--1,0,2,0--Name: Michael Brown, Age: 42, Gender: Male--Allergic Reaction--Loratadine 10mg--None
+3--0,1,2,0--Name: Olivia Martinez, Age: 28, Gender: Female--Common Cold--None--None
+4--2,1,2,2--Name: William Wilson, Age: 60, Gender: Male--Coronary Artery Disease--Atorvastatin 40mg--ECG, Cholesterol Level
+5--1,2,2,0--Name: Sophia Lee, Age: 25, Gender: Female--Food Poisoning--Ondansetron 4mg--Stool Sample
+6--0,0,0,1--Name: Ethan Turner, Age: 31, Gender: Male--Sprained Ankle--None--X-ray
+7--1,1,1,0--Name: Ava Clark, Age: 48, Gender: Female--Bronchitis--Amoxicillin 500mg--Sputum Culture
+8--2,1,2,1--Name: James Miller, Age: 55, Gender: Male--Diabetes--Insulin As per sliding scale--Hemoglobin A1c, Fasting Blood Sugar
+9--0,0,1,1--Name: Mia Hall, Age: 22, Gender: Female--Insect Bite--Hydrocortisone Cream--None
+10--1,2,1,2--Name: Benjamin White, Age: 40, Gender: Male--Pneumonia--Azithromycin 500mg--Chest X-ray, Sputum Culture
+11--0,1,1,2--Name: Lily Baker, Age: 19, Gender: Female--Sunburn--Ibuprofen 200mg--None
+12--2,0,0,0--Name: Daniel Scott, Age: 62, Gender: Male--Hypothyroidism--Levothyroxine--Thyroid Function Test
+13--1,2,1,0--Name: Chloe Young, Age: 38, Gender: Female--Gastroenteritis--None--Stool Sample
+14--0,0,2,2--Name: Noah Green, Age: 27, Gender: Male--Minor Cuts and Bruises--None--None
+15--1,1,1,1--Name: Grace Harris, Age: 55, Gender: Female--Otitis Media--Ciprofloxacin Ear Drops--Ear Examination
+16--2,2,2,1--Name: Samuel Turner, Age: 68, Gender: Male--Hypertension--Enalapril 10mg--Blood Pressure Monitoring
+17--0,2,1,2--Name: Emily Collins, Age: 23, Gender: Female--Seasonal Allergies--Loratadine 10mg--None
+18--1,2,0,0--Name: Andrew Bennett, Age: 45, Gender: Male--Sinus Infection--Amoxicillin 500mg--None
+19--0,1,2,2--Name: Harper Lewis, Age: 30, Gender: Female--Stress-Related Headache--Acetaminophen 500mg--None
+20--2,2,1,1--Name: Benjamin Parker, Age: 58, Gender: Male--Osteoarthritis--Celecoxib 200mg--Joint X-ray, ESR

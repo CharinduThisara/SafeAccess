@@ -46,8 +46,8 @@ public class MedicalDataProcessing {
         }
     }
 
-    public String viewData(User user){
-        return this.accessController.getAllData(user);
+    public void viewData(User user){
+        this.accessController.getAllData(user);
     }
 
     public void init(){

@@ -77,50 +77,72 @@ public class AccessController {
     public User getUser(String username) {
         return users.get(username);
     }
-
-   /*  private String formatData(String username, String password, int userType, int privLvlIntegrity,int privLvlConfidentiality){
-        return new String(null, privLvlIntegrity, privLvlConfidentiality, null)
-    }
- */
-    
-
+  
     public void addUser(String username, String password, int userType, int privLvlIntegrity,int privLvlConfidentiality){
 
         User user = UserFactory.getUser(username,password,userType,privLvlIntegrity,privLvlConfidentiality);
         users.put(user.getUsername(), user);
     }
 
-    public String getAllData(User user){
+    private void printRecord(String[] array){
+        String[] personalData = array[1].split(",");
+        String name;
+        String age;
+        String gender;
+
+        if (personalData.length>1){
+            name = personalData[0].strip();
+            age  = personalData[1].strip();
+            gender = personalData[2].strip();
+        }
+        else{
+            name = personalData[0].strip();
+            age = "";
+            gender = "";
+        }
         
+        System.out.format("%5s |%-25s |%20s |%20s |%s\n",array[0], name,array[2],array[3],array[4]);
+        System.out.format("%5s |%-25s |%20s |%20s |%s\n","", age,"","","");
+        System.out.format("%5s |%-25s |%20s |%20s |%s\n","", gender,"","","");
+        System.out.println("---------------------------------------------------------------------------------------------------");
+        
+    }
+
+    public void getAllData(User user){
+        System.out.println("---------------------------------------------------------------------------------------------------");
+        System.out.format("%5s |%25s |%20s |%20s |%s\n","ID","Personal", "Sickness","Drug","Lab_Test");
+        System.out.format("%5s |%25s |%20s |%20s |%s\n","","Details", "","Prescription","Prescription");
+        System.out.println("---------------------------------------------------------------------------------------------------");
+                    
         dataRecords.forEach((key, dataRecord) -> {
             if (user != null && dataRecord != null) {
                 if (user.getUserType() == PATIENT) {
                     // Patients can read their own data records (if sensitivity allows)
                     if (dataRecord.getSensitivityLevels()[0] <= MEDIUM_PRIVILEGE) {
-                        System.out.println("Accessing patient data:\n");
-                        System.out.format("%-5s %-30s%-25s%-25s%s\n","ID","Personal_Details", "Sickness","Drug_Prescription","Lab_Test_Prescription");
-                        System.out.println("--------------------------------------------------------------------------");
-                        System.out.format("%-5d%-30s%-25s%-25s%s\n", dataRecord.getId(),dataRecord.getPersonalDetails(),dataRecord.getSicknessDetails(),dataRecord.getDrugPrescriptions(),dataRecord.getLabTestPrescriptions());
                         dataRecord.printData();
-                
+                        //printRecord(new String[4]);
                     } else {
                         System.out.println("Access denied due to sensitivity level.");
                     }
                 } else if (user.getUserType() == HOSPITAL_STAFF) {
                     // Hospital staff can access data based on their privilege level
-                    if (user.getPrivLvlIntegrity() >= dataRecord.getSensitivityLevels()[0]) {
-                        System.out.println("Accessing hospital staff data:");
-                        System.out.format("%-5s %-30s%-25s%-25s%s\n","ID","Personal_Details", "Sickness","Drug_Prescription","Lab_Test_Prescription");
-                        System.out.println("--------------------------------------------------------------------------");
-                        System.out.format("%-5d%-30s%-25s%-25s%s\n", dataRecord.getId(),dataRecord.getPersonalDetails(),dataRecord.getSicknessDetails(),dataRecord.getDrugPrescriptions(),dataRecord.getLabTestPrescriptions());
-                        dataRecord.printData();
-                    } else {
-                        System.out.println("Access denied due to privilege level.");
+
+                    String[] array = new String[5];
+                    int k=0;
+                    array[k++] = Integer.toString(dataRecord.getId());
+                    array[k++] = dataRecord.getPersonalDetails();
+                    array[k++] = dataRecord.getSicknessDetails();
+                    array[k++] = dataRecord.getDrugPrescriptions();
+                    array[k++] = dataRecord.getLabTestPrescriptions();
+                    for (int i=1; i<5 ; i++ ){
+                        if (user.getPrivLvlConfidentiality() < dataRecord.getSensitivityLevels()[i-1]) {
+                            array[i]= "Access Denied";
+                        }
                     }
+                    printRecord(array);
                 }
             }
         });
-        return new String();
         }
 }
 
