@@ -55,13 +55,12 @@ public class MedicalDataProcessing {
         this.accessController.getAllData(user);
     }
 
-    public void writeData(User user){
+    public void writeData(User user,Scanner scanner){
         if (!accessController.checkAccess(user,0, WRITE)){
             System.out.println("Write is not Allowed");
             return;
         }
-        try(Scanner scanner = new Scanner(System.in);){
-
+        try{
             System.out.println("Enter Data....\n");
             System.out.print(
                 "Personal Details:..\n"+//
@@ -117,60 +116,99 @@ public class MedicalDataProcessing {
             }
 
             accessController.writeRecord(user, Data, sensitivities);
-
+        }
+        catch(Exception e){
+            System.out.println("Error in Writing Data");
         }
 
     }
+    
+    private void addUser(User user) {
+        
+        if (!accessController.checkAccess(user,2,WRITE)){
+            return;
+        }
 
+        Console console = System.console();
+
+        System.out.println("Enter User Data....\n");
+        String[] Data = new String[4];
+        int i = 0;
+        
+        Data[i++] = console.readLine("UserName           : ");
+        Data[i++] = new String(console.readPassword("Password           : "));
+        Data[i++] = new String(console.readPassword("re-enter Password  : "));
+
+        if (!Data[i-1].equals(Data[i-2])){
+            System.out.println("Passwords Do not Match");
+            return;
+        }
+
+        i--;
+
+        Data[i++] = console.readLine("UserType\n(0-patient/1-Staff): ");
+        Data[i++] = console.readLine("Privilege LVL (0,1,2)   : ");
+       
+        i=0;
+        accessController.addUser(user,Data[i++], hashPassword(Data[i++]),Integer.parseInt(Data[i++]),Integer.parseInt(Data[i++]));
+    }
     public void init(){
         this.accessController = new AccessController();
     }
+
     private void logout(User user) {
         if (user!=null){
             this.currentUser = null;
+            accessController.loadUsers();
             login();
         }
     }
 
+
     public boolean login(){
+        try{
+            System.out.println("      ___           ___           ___           ___     \n" + //
+                    "     /\\__\\         /\\  \\         /\\__\\         /\\__\\    \n" + //
+                    "    /:/ _/_       /::\\  \\       /:/ _/_       /:/ _/_   \n" + //
+                    "   /:/ /\\  \\     /:/\\:\\  \\     /:/ /\\__\\     /:/ /\\__\\  \n" + //
+                    "  /:/ /::\\  \\   /:/ /::\\  \\   /:/ /:/  /    /:/ /:/ _/_ \n" + //
+                    " /:/_/:/\\:\\__\\ /:/_/:/\\:\\__\\ /:/_/:/  /    /:/_/:/ /\\__\\\n" + //
+                    " \\:\\/:/ /:/  / \\:\\/:/  \\/__/ \\:\\/:/  /     \\:\\/:/ /:/  /\n" + //
+                    "  \\::/ /:/  /   \\::/__/       \\::/__/       \\::/_/:/  / \n" + //
+                    "   \\/_/:/  /     \\:\\  \\        \\:\\  \\        \\:\\/:/  /  \n" + //
+                    "     /:/  /       \\:\\__\\        \\:\\__\\        \\::/  /   \n" + //
+                    "     \\/__/         \\/__/         \\/__/         \\/__/    \n" + //
+                    "");
 
-        System.out.println("      ___           ___           ___           ___     \n" + //
-                "     /\\__\\         /\\  \\         /\\__\\         /\\__\\    \n" + //
-                "    /:/ _/_       /::\\  \\       /:/ _/_       /:/ _/_   \n" + //
-                "   /:/ /\\  \\     /:/\\:\\  \\     /:/ /\\__\\     /:/ /\\__\\  \n" + //
-                "  /:/ /::\\  \\   /:/ /::\\  \\   /:/ /:/  /    /:/ /:/ _/_ \n" + //
-                " /:/_/:/\\:\\__\\ /:/_/:/\\:\\__\\ /:/_/:/  /    /:/_/:/ /\\__\\\n" + //
-                " \\:\\/:/ /:/  / \\:\\/:/  \\/__/ \\:\\/:/  /     \\:\\/:/ /:/  /\n" + //
-                "  \\::/ /:/  /   \\::/__/       \\::/__/       \\::/_/:/  / \n" + //
-                "   \\/_/:/  /     \\:\\  \\        \\:\\  \\        \\:\\/:/  /  \n" + //
-                "     /:/  /       \\:\\__\\        \\:\\__\\        \\::/  /   \n" + //
-                "     \\/__/         \\/__/         \\/__/         \\/__/    \n" + //
-                "");
 
+            Console console = System.console();
 
-        Console console = System.console();
+            if (console == null) {
+                System.err.println("Console not available. Exiting.");
+                System.exit(1);
+            }
 
-        if (console == null) {
-            System.err.println("Console not available. Exiting.");
-            System.exit(1);
-        }
+            String username = console.readLine("Login > Username : ");
+            System.out.print("");
+            String password = new String(console.readPassword("      > Password : "));
+            System.out.print("");
 
-        String username = console.readLine("Login > Username : ");
-        System.out.print("");
-        String password = new String(console.readPassword("      > Password : "));
-        System.out.print("");
+            User curUser = accessController.getUser(username);
 
-        User curUser = accessController.getUser(username);
-
-        if (curUser == null){
-            return false;
-        }
-        
-        if (curUser.getPassword().equals(hashPassword(password))){
-            currentUser = curUser;
-            return true;
-        }
+            if (curUser == null){
+                return false;
+            }
+            
+            if (curUser.getPassword().equals(hashPassword(password))){
+                currentUser = curUser;
+                return true;
+            }
+    }
+    catch(Exception e){
+        System.out.println("error in login");
         return false;
+    }
+    return false;
     }
 
     public static void main(String[] args) {
@@ -186,16 +224,16 @@ public class MedicalDataProcessing {
 
         System.out.format("\nLogin Successfull\n\nWELCOME %s...!!\n\n",program.currentUser.getUsername());
 
-        // Simulate access to data based on user privilege and data sensitivity
-        User currentUser = program.currentUser;
-
         try (Scanner scanner = new Scanner(System.in)) {
+            
             while(true){
+            
                 System.out.println(
                     "Select a Choice....\n"+//
                     "Write new Data(1)\n"+//
                     "Read All Data (2)\n"+//
-                    "Logout        (3)\n"+//
+                    "Add user      (3)\n"+//
+                    "Logout        (4)\n"+//
                     "Exit          (99)"
                 );
 
@@ -205,13 +243,16 @@ public class MedicalDataProcessing {
 
                 switch (Integer.parseInt(choice)) {
                     case 1:
-                        program.writeData(currentUser);
+                        program.writeData(program.currentUser,scanner);
                         break;
                     case 2:
-                        program.viewData(currentUser);
+                        program.viewData(program.currentUser);
                         break;
                     case 3:
-                        program.logout(currentUser);
+                        program.addUser(program.currentUser);
+                        break;
+                    case 4:
+                        program.logout(program.currentUser);
                         break;
                     case 99:
                         System.out.println("\nExiting..........");
@@ -219,12 +260,11 @@ public class MedicalDataProcessing {
                     default:
                         continue;
                 }
-            }      
-        } catch (NumberFormatException e) {
+            }
+        }      
+        catch (Exception e) {
             e.printStackTrace();
         }  
     }
-
-    
 
 }

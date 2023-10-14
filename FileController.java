@@ -13,8 +13,8 @@ public class FileController {
 
             // Write user data
             for (String line : Data) {
-                bufferedWriter.write(line);
                 bufferedWriter.newLine();
+                bufferedWriter.write(line);
             }
 
             System.out.println("Data has been written to " + fileName);

@@ -42,6 +42,8 @@ public class AccessController {
     }
     public void loadUsers(){
 
+        users.clear();
+
         String[] userData = this.fileController.readFile(USRCONFPATH);
 
         for (String data : userData){
@@ -55,6 +57,8 @@ public class AccessController {
     }
 
     public void loadData(){
+
+        dataRecords.clear();
 
         String[] Data = this.fileController.readFile(DATAPATH);
 
@@ -81,10 +85,18 @@ public class AccessController {
         return users.get(username);
     }
   
-    public void addUser(String username, String password, int userType, int privLvl){
+    public void addUser(User curUser, String username, String password, int userType, int privLvl){
+        
+        if (!checkAccess(curUser,2,WRITE))
+            return;
 
         User user = UserFactory.getUser(username,password,userType,privLvl);
         users.put(user.getUsername(), user);
+
+        String[] Lines = {user.getUsername()+","+user.getPassword()+","+user.getUserType()+","+user.getPrivLvl()};
+
+        fileController.writeFile(Lines, USRCONFPATH);
+
     }
 
     private void printRecord(String[] array){
@@ -119,7 +131,7 @@ public class AccessController {
                 return;
             
             String[] personalDetail = {data[0],data[1],data[2]};
-            String[] temp = Arrays.copyOfRange(data, 3, 5);
+            String[] temp = Arrays.copyOfRange(data, 3, 6);
             data[0] = String.join(",", personalDetail);
             data[1] = String.join("--",temp);
             String line = data[0]+"--"+data[1];
@@ -132,10 +144,13 @@ public class AccessController {
                    line;
             
             line = Integer.toString(DataRecord.getRecordCount()+1)+"--"+line;
+
+            System.out.println(DataRecord.getRecordCount());
             
             String[] Lines = {line};
             
             fileController.writeFile(Lines, DATAPATH);
+            loadData();
 
         }catch(Exception e){
             System.out.println("Data write failed");
