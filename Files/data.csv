@@ -6,7 +6,7 @@
 6--0,0,0,1--Name: Ethan Turner, Age: 31, Gender: Male--Sprained Ankle--None--X-ray
 7--1,1,1,0--Name: Ava Clark, Age: 48, Gender: Female--Bronchitis--Amoxicillin 500mg--Sputum Culture
 8--2,1,2,1--Name: James Miller, Age: 55, Gender: Male--Diabetes--Insulin--Hemoglobin A1c, Fasting Blood Sugar
-9--0,0,1,1--Name: Mia Hall, Age: 22, Gender: Female--Insect Bite--Hydrocortisone Cream--None
+9   --0,0,1,1--Name: Mia Hall, Age: 22, Gender: Female--Insect Bite--Hydrocortisone Cream--None
 10--1,2,1,2--Name: Benjamin White, Age: 40, Gender: Male--Pneumonia--Azithromycin 500mg--Chest X-ray, Sputum Culture
 11--0,1,1,2--Name: Lily Baker, Age: 19, Gender: Female--Sunburn--Ibuprofen 200mg--None
 12--2,0,0,0--Name: Daniel Scott, Age: 62, Gender: Male--Hypothyroidism--Levothyroxine--Thyroid Function Test
@@ -23,3 +23,5 @@
 23--0,0,0,0--Name: a,Age: 23,Gender: Female--a--a--a
 24--1,0,0,0--Name: CT,Age: 23,Gender: Male--Athsma--ada--none
 25--0,0,0,0--Name: a,Age: 24,Gender: Male--d--f--e
+26--2,2,2,2--Name: CTR,Age: 23,Gender: Male--Psycho--Sleep--none
+27--1,1,1,1--Name: Sam,Age: 25,Gender: Male--Athsma--Piriton 200mg--none

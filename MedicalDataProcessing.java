@@ -126,6 +126,7 @@ public class MedicalDataProcessing {
     private void addUser(User user) {
         
         if (!accessController.checkAccess(user,2,WRITE)){
+            System.out.println("Adding Users Not allowed");
             return;
         }
 
