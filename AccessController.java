@@ -8,6 +8,9 @@ public class AccessController {
     private static final String USRCONFPATH = "Files/userConf.csv";
     private static final String DATAPATH = "Files/data.csv";
 
+    public static final int READ = 0;
+    public static final int WRITE = 1;
+
     //user data stored in a HashMap
     private final HashMap<String, User> users;
     //data records stored in a HashMap
@@ -23,6 +26,7 @@ public class AccessController {
     public static final int LOW_PRIVILEGE = 0;
     public static final int MEDIUM_PRIVILEGE = 1;
     public static final int HIGH_PRIVILEGE = 2;
+    
 
     // Constants for secret levels (Confidentiality)
     public static final int PUBLIC = 0;
@@ -107,25 +111,39 @@ public class AccessController {
         
     }
 
+    // ROLE BASED REFERENCE MONITOR ---- THIS CHECKS SENSITIVITY + PRIVILEGE LEVEL
+    public boolean checkAccess(User user, int sensitivity_level, int action){
+        if (user.getUserType() == PATIENT){
+            if (action == READ && sensitivity_level == PUBLIC)
+                return true;
+            else
+                return false;
+        }
+        else if (user.getUserType() == HOSPITAL_STAFF){
+
+            if (action == READ && sensitivity_level == PUBLIC)
+                return true;
+            else if(action == READ && sensitivity_level == CONFIDENTIAL && user.getPrivLvl() > LOW_PRIVILEGE)
+                return true;
+            else if(action == READ && sensitivity_level == SECRET && user.getPrivLvl() > MEDIUM_PRIVILEGE)
+                return true;
+            else if(action == WRITE && user.getPrivLvl() == HIGH_PRIVILEGE)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+
     public void getAllData(User user){
         System.out.println("---------------------------------------------------------------------------------------------------");
-        System.out.format("%5s |%25s |%20s |%20s |%s\n","ID","Personal", "Sickness","Drug","Lab_Test");
-        System.out.format("%5s |%25s |%20s |%20s |%s\n","","Details", "","Prescription","Prescription");
+        System.out.format("%5s |%-25s |%20s |%20s |%s\n","ID","Personal", "Sickness","Drug","Lab_Test");
+        System.out.format("%5s |%-25s |%20s |%20s |%s\n","","Details", "","Prescription","Prescription");
         System.out.println("---------------------------------------------------------------------------------------------------");
                     
         dataRecords.forEach((key, dataRecord) -> {
             if (user != null && dataRecord != null) {
-                if (user.getUserType() == PATIENT) {
-                    // Patients can read their own data records (if sensitivity allows)
-                    if (dataRecord.getSensitivityLevels()[0] <= MEDIUM_PRIVILEGE) {
-                        dataRecord.printData();
-                        //printRecord(new String[4]);
-                    } else {
-                        System.out.println("Access denied due to sensitivity level.");
-                    }
-                } else if (user.getUserType() == HOSPITAL_STAFF) {
-                    // Hospital staff can access data based on their privilege level
-
                     String[] array = new String[5];
                     int k=0;
                     array[k++] = Integer.toString(dataRecord.getId());
@@ -134,14 +152,13 @@ public class AccessController {
                     array[k++] = dataRecord.getDrugPrescriptions();
                     array[k++] = dataRecord.getLabTestPrescriptions();
                     for (int i=1; i<5 ; i++ ){
-                        if (user.getPrivLvl() < dataRecord.getSensitivityLevels()[i-1]) {
+                        if (!checkAccess(user, dataRecord.getSensitivityLevels()[i-1], READ)) {
                             array[i]= "Access Denied";
                         }
                     }
                     printRecord(array);
                 }
-            }
-        });
+            });
         }
 }
 

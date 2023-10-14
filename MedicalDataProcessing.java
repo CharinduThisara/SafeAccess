@@ -2,6 +2,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
+import Users.Patient;
 import Users.User;
 
 import java.io.Console;
@@ -11,6 +12,9 @@ public class MedicalDataProcessing {
     // Constants for user types
     public static final int PATIENT = 0;
     public static final int HOSPITAL_STAFF = 1;
+
+    public static final int READ = 0;
+    public static final int WRITE = 1;
 
     // Constants for privilege levels (Integrity)
     public static final int LOW_PRIVILEGE = 0;
@@ -52,22 +56,59 @@ public class MedicalDataProcessing {
         this.accessController.getAllData(user);
     }
 
-    public void writeData(){
-        Scanner scanner = new Scanner(System.in);
+    public void writeData(User user){
 
-        System.out.println("Enter Data....\n");
-        System.out.println(
-            "Personal Details:..\n"+//
-            "Name:"
-        );
+        if (user == null || user instanceof Patient){
+            System.out.println("write permission not allowed");
+            return;
+        } 
 
-        System.out.println(
-            "Age:"
-        );
+        try(Scanner scanner = new Scanner(System.in);){
 
-        System.out.println(
-            "Gender:"
-        );
+            System.out.println("Enter Data....\n");
+            System.out.print(
+                "Personal Details:..\n"+//
+                "Name: "
+            );
+            String[] Data = new String[6];
+            int i = 0;
+            
+            Data[i++] = scanner.nextLine().strip();
+
+            System.out.print(
+                "Age: "
+            );
+
+            Data[i++] = scanner.nextLine().strip();
+
+            System.out.println(
+                "Gender:"
+            );
+
+            Data[i++] = scanner.nextLine().strip();
+
+            System.out.print(
+                "sickness details      : "
+            );
+
+            Data[i++] = scanner.nextLine().strip();
+
+            System.out.print(
+                "drug prescriptions    : "
+            );
+
+            Data[i++] = scanner.nextLine().strip();
+
+            System.out.print(
+                "lab test prescriptions: "
+            );
+
+            Data[i++] = scanner.nextLine().strip();
+
+
+
+        }
+
     }
 
     public void init(){
@@ -135,9 +176,8 @@ public class MedicalDataProcessing {
             while(true){
                 System.out.println(
                     "Select a Choice....\n"+//
-                    "Write         (1)\n"+//
+                    "Write new Data(1)\n"+//
                     "Read All Data (2)\n"+//
-                    "Read My Data  (3)\n"+//
                     "Exit          (99)"
                 );
 
@@ -147,13 +187,10 @@ public class MedicalDataProcessing {
 
                 switch (Integer.parseInt(choice)) {
                     case 1:
-                        program.writeData();
+                        program.writeData(currentUser);
                         break;
                     case 2:
                         program.viewData(currentUser);
-                        break;
-                    case 3:
-                        System.out.println("your data");
                         break;
                     case 99:
                         System.out.println("\nExiting..........");
@@ -166,4 +203,5 @@ public class MedicalDataProcessing {
             e.printStackTrace();
         }  
     }
+
 }
