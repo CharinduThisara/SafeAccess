@@ -2,7 +2,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-import Users.Patient;
 import Users.User;
 
 import java.io.Console;
@@ -57,12 +56,10 @@ public class MedicalDataProcessing {
     }
 
     public void writeData(User user){
-
-        if (user == null || user instanceof Patient){
-            System.out.println("write permission not allowed");
+        if (!accessController.checkAccess(user,0, WRITE)){
+            System.out.println("Write is not Allowed");
             return;
-        } 
-
+        }
         try(Scanner scanner = new Scanner(System.in);){
 
             System.out.println("Enter Data....\n");
@@ -73,19 +70,19 @@ public class MedicalDataProcessing {
             String[] Data = new String[6];
             int i = 0;
             
-            Data[i++] = scanner.nextLine().strip();
+            Data[i++] = "Name: "+scanner.nextLine().strip();
 
             System.out.print(
                 "Age: "
             );
 
-            Data[i++] = scanner.nextLine().strip();
+            Data[i++] = "Age: "+scanner.nextLine().strip();
 
-            System.out.println(
+            System.out.print(
                 "Gender:"
             );
 
-            Data[i++] = scanner.nextLine().strip();
+            Data[i++] = "Gender: "+scanner.nextLine().strip();
 
             System.out.print(
                 "sickness details      : "
@@ -105,7 +102,21 @@ public class MedicalDataProcessing {
 
             Data[i++] = scanner.nextLine().strip();
 
+            System.out.print(
+                "Sensitivity Lvls(0-2) for\n"+//
+                "for each category\n "+//
+                "format --> 1,2,3,4\n"+//
+                "Enter     : "
+            );
 
+            int[] sensitivities = new int[4];
+
+            String[] sensitivitiesChr = scanner.nextLine().split(",");
+            for (int j = 0; j < 4; j++) {
+                sensitivities[j] = Integer.parseInt(sensitivitiesChr[j]);
+            }
+
+            accessController.writeRecord(user, Data, sensitivities);
 
         }
 
@@ -113,6 +124,12 @@ public class MedicalDataProcessing {
 
     public void init(){
         this.accessController = new AccessController();
+    }
+    private void logout(User user) {
+        if (user!=null){
+            this.currentUser = null;
+            login();
+        }
     }
 
     public boolean login(){
@@ -178,6 +195,7 @@ public class MedicalDataProcessing {
                     "Select a Choice....\n"+//
                     "Write new Data(1)\n"+//
                     "Read All Data (2)\n"+//
+                    "Logout        (3)\n"+//
                     "Exit          (99)"
                 );
 
@@ -192,6 +210,9 @@ public class MedicalDataProcessing {
                     case 2:
                         program.viewData(currentUser);
                         break;
+                    case 3:
+                        program.logout(currentUser);
+                        break;
                     case 99:
                         System.out.println("\nExiting..........");
                         return;
@@ -203,5 +224,7 @@ public class MedicalDataProcessing {
             e.printStackTrace();
         }  
     }
+
+    
 
 }

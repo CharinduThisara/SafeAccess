@@ -7,23 +7,23 @@ import java.io.IOException;
 
 public class FileController {
 
-    public static void writeuserConf(String[] userData, String fileName) {
-        try (FileWriter fileWriter = new FileWriter(new File(fileName)); //try with resources to auto close without suppressing exceptions
+    public void writeFile(String[] Data, String fileName) {
+        try (FileWriter fileWriter = new FileWriter(new File(fileName),true); //try with resources to auto close without suppressing exceptions
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
 
             // Write user data
-            for (String user : userData) {
-                bufferedWriter.write(user);
+            for (String line : Data) {
+                bufferedWriter.write(line);
                 bufferedWriter.newLine();
             }
 
-            System.out.println("User data has been written to " + fileName);
+            System.out.println("Data has been written to " + fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public String[] readUserConfig(String filePath) {
+    public String[] readFile(String filePath) {
         try(FileReader fileReader = new FileReader(new File(filePath));
             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 

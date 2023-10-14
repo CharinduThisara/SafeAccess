@@ -1,5 +1,7 @@
 // DataRecord class to store data records
 public class DataRecord {
+    private static int count = 0;
+
     private int id;
     private int[] sensitivityLevels;
     private String personalDetails;
@@ -14,6 +16,12 @@ public class DataRecord {
         this.sicknessDetails = sicknessDetails;
         this.drugPrescriptions = drugPrescriptions;
         this.labTestPrescriptions = labTestPrescriptions;
+
+        count++;
+    }
+
+    public static int getRecordCount(){
+        return count;
     }
 
     public int getId() {

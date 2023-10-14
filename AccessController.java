@@ -42,7 +42,7 @@ public class AccessController {
     }
     public void loadUsers(){
 
-        String[] userData = this.fileController.readUserConfig(USRCONFPATH);
+        String[] userData = this.fileController.readFile(USRCONFPATH);
 
         for (String data : userData){
             User user = UserFactory.getUser(
@@ -56,7 +56,7 @@ public class AccessController {
 
     public void loadData(){
 
-        String[] Data = this.fileController.readUserConfig(DATAPATH);
+        String[] Data = this.fileController.readFile(DATAPATH);
 
         for (String record : Data){
             String[] temp = record.split("--");
@@ -108,9 +108,43 @@ public class AccessController {
         System.out.format("%5s |%-25s |%20s |%20s |%s\n","", age,"","","");
         System.out.format("%5s |%-25s |%20s |%20s |%s\n","", gender,"","","");
         System.out.println("---------------------------------------------------------------------------------------------------");
-        
     }
 
+    public void writeRecord(User user, String[] data, int[] sensitivities){
+        try{
+            if (!checkAccess(user, 0, WRITE))
+                return;
+
+            if(!isValid(data,sensitivities))
+                return;
+            
+            String[] personalDetail = {data[0],data[1],data[2]};
+            String[] temp = Arrays.copyOfRange(data, 3, 5);
+            data[0] = String.join(",", personalDetail);
+            data[1] = String.join("--",temp);
+            String line = data[0]+"--"+data[1];
+
+            int i = 0;
+            line = Integer.toString(sensitivities[i++])+","+
+                   Integer.toString(sensitivities[i++])+","+
+                   Integer.toString(sensitivities[i++])+","+
+                   Integer.toString(sensitivities[i++])+"--"+
+                   line;
+            
+            line = Integer.toString(DataRecord.getRecordCount()+1)+"--"+line;
+            
+            String[] Lines = {line};
+            
+            fileController.writeFile(Lines, DATAPATH);
+
+        }catch(Exception e){
+            System.out.println("Data write failed");
+        }
+    }
+
+    private boolean isValid(String[] data, int[] sensitivities) {
+        return true;
+    }
     // ROLE BASED REFERENCE MONITOR ---- THIS CHECKS SENSITIVITY + PRIVILEGE LEVEL
     public boolean checkAccess(User user, int sensitivity_level, int action){
         if (user.getUserType() == PATIENT){

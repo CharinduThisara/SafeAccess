@@ -1,7 +1,6 @@
 package Users;
 // User class to store user information
 public abstract class User {
-    private int ID;
     private String username;
     private String password;
     private int userType;
