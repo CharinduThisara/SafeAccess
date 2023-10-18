@@ -6,6 +6,5 @@ public class Patient extends User {
     public Patient(String username, String password, int userType, int privLvl) {
 
         super(username, password, userType, Math.min(privLvl,MAX_PRIV));
-
     }
 }
